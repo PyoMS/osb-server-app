@@ -3,9 +3,9 @@ package com.osb.osbserverapp.dto;
 import java.util.List;
 
 public class ObsGetListRes {
-    private List obsDtoList;
+    private List blogSearchList;
 
-    public ObsGetListRes(List obsDtoList) {
-        this.obsDtoList = obsDtoList;
+    public ObsGetListRes(List blogSearchList) {
+        this.blogSearchList = blogSearchList;
     }
 }

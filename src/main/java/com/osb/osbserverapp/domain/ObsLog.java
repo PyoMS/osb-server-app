@@ -1,6 +1,7 @@
 package com.osb.osbserverapp.domain;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -18,4 +19,13 @@ public class ObsLog {
 
     private String text;
     private Long count;
+
+    @Builder
+    public ObsLog(String text, Long count) {
+        this.text = text;
+        this.count = count;
+    }
+    public void plusCount() {
+        count++;
+    }
 }

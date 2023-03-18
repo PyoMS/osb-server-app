@@ -20,8 +20,6 @@ public class ObsLogApi {
     @GetMapping("/search")
     public ObsGetListRes searchBlogList(ObsGetListReq obsGetListReq) {
         log.info("searchBlogList");
-        System.out.println("obsGetListReq = " + obsGetListReq);
-//        TODO Service 단에서 외부 접근 가능하도록
-        return null;
+        return obsLogService.searchBlogList(obsGetListReq);
     }
 }
