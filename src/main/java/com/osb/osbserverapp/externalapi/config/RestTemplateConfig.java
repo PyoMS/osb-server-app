@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 @Configuration
-public class RestTemplateConfig {
+public class RestTemplateConfig { // RestTemplate Config
     @Bean
     @LoadBalanced
     public RestTemplate getCustomRestTemplate() {

@@ -1,8 +1,8 @@
 package com.osb.osbserverapp.api;
 
 import com.osb.osbserverapp.dto.ObsGetListReq;
-import com.osb.osbserverapp.dto.ObsGetListRes;
 import com.osb.osbserverapp.dto.ObsTopGetListRes;
+import com.osb.osbserverapp.externalapi.dto.KakaoBlogResponse;
 import com.osb.osbserverapp.service.ObsLogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ public class ObsLogApi {
     private final ObsLogService obsLogService;
 
     @GetMapping("/search")
-    public ObsGetListRes searchBlogList(ObsGetListReq obsGetListReq) {
+    public KakaoBlogResponse searchBlogList(ObsGetListReq obsGetListReq) {
         log.info("searchBlogList");
         return obsLogService.searchBlogList(obsGetListReq);
     }

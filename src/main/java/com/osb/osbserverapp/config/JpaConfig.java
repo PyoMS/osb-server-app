@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Configuration
-public class JpaConfig {
+public class JpaConfig { //QueryDsl config
     @PersistenceContext
     private EntityManager entityManager;
 
