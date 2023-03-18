@@ -4,6 +4,7 @@ package com.osb.osbserverapp.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @RequiredArgsConstructor
 @Getter
+@ToString
 @Table(name = "OBS_LOG")
 public class ObsLog {
     @Id

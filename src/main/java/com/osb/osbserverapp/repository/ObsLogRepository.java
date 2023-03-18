@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ObsLogRepository extends JpaRepository<ObsLog, Long> {
+public interface ObsLogRepository extends JpaRepository<ObsLog, Long>, ObsLogRepositoryCustom {
     Optional<ObsLog> findByText(String text);
 
 }
