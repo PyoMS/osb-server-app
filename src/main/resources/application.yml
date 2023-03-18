@@ -16,9 +16,9 @@ Spring:
         default_batch_fetch_size: 100
         #        show_sql: true
         format_sql: true
-#  h2:
-#    console:
-#      enabled: true
+  h2:
+    console:
+      enabled: true
 logging:
   level:
     org.hibernate.SQL: debug
