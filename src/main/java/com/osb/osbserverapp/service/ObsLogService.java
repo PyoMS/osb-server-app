@@ -19,15 +19,14 @@ public class ObsLogService {
 
     @Transactional
     public ObsGetListRes searchBlogList(ObsGetListReq obsGetListReq){
-        // TODO 1) 외부 API 조회 - 검색되는
-        //  data > 0 이면, 해당 검색어 엔터티에 저장.
-        //  0이면 조회된 결과 없음으로 반환할 것.
+        // TODO 추후 kakao api health 체크 - 응답없을 시 naver로 전환
+        // TODO kakao api 검색 결과값 0 일경우 null 처리
 
 
-        if(obsLogRepository.findByText(obsGetListReq.getText()).isPresent()){
+        if(obsLogRepository.findByText(obsGetListReq.getText()).isPresent()){ // 조회이력 존재할 경우
             ObsLog obsLog = obsLogRepository.findByText(obsGetListReq.getText()).get();
             obsLog.plusCount();
-        }else{
+        } else{ // 조회이력 없을 경우
             ObsLog obsLog = ObsLog.builder()
                     .text(obsGetListReq.getText())
                     .count(1L)
@@ -38,7 +37,7 @@ public class ObsLogService {
     }
 
     public ObsTopGetListRes searchTopTen(){
-        return null;
+        return new ObsTopGetListRes(obsLogRepository.findTopTenList());
     }
 
 }

@@ -1,4 +1,4 @@
-package com.osb.osbserverapp.dto;
+package com.osb.osbserverapp.vo;
 
 public class BlogSearchResultVo {
     private String blogname;
