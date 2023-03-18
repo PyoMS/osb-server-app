@@ -3,13 +3,13 @@ package com.osb.osbserverapp.service;
 import com.osb.osbserverapp.domain.ObsLog;
 import com.osb.osbserverapp.dto.ObsGetListReq;
 import com.osb.osbserverapp.dto.ObsGetListRes;
+import com.osb.osbserverapp.dto.ObsTopGetListRes;
 import com.osb.osbserverapp.repository.ObsLogRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +34,10 @@ public class ObsLogService {
                     .build();
             obsLogRepository.save(obsLog);
         }
+        return null;
+    }
+
+    public ObsTopGetListRes searchTopTen(){
         return null;
     }
 

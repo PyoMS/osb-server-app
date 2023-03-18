@@ -2,6 +2,7 @@ package com.osb.osbserverapp.api;
 
 import com.osb.osbserverapp.dto.ObsGetListReq;
 import com.osb.osbserverapp.dto.ObsGetListRes;
+import com.osb.osbserverapp.dto.ObsTopGetListRes;
 import com.osb.osbserverapp.service.ObsLogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,4 +23,11 @@ public class ObsLogApi {
         log.info("searchBlogList");
         return obsLogService.searchBlogList(obsGetListReq);
     }
+
+    @GetMapping("/search/topten")
+    public ObsTopGetListRes searchTopTen(){ // no parameter. 상위 10위만 조회.
+        log.info("searchTopTen");
+        return obsLogService.searchTopTen();
+    }
+
 }

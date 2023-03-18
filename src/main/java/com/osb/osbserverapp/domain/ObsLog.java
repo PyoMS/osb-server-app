@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @RequiredArgsConstructor
@@ -19,11 +20,13 @@ public class ObsLog {
 
     private String text;
     private Long count;
+    private LocalDateTime searchStartDateTime; // 시간대별 조회 현황
 
     @Builder
     public ObsLog(String text, Long count) {
         this.text = text;
         this.count = count;
+        this.searchStartDateTime = LocalDateTime.now();
     }
     public void plusCount() {
         count++;
