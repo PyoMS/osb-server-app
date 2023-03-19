@@ -13,11 +13,11 @@ b. 인기 검색어 TOP 10 조회 기능
 
 
 ### 3. Config / Advice 항목
-[1. JpaConfig](/osb-server-app/src/main/java/com/osb/osbserverapp/config/JpaConfig.java) : QueryDSL 라이브러리 사용을 위한 Config 설정
+[1. JpaConfig](/src/main/java/com/osb/osbserverapp/config/JpaConfig.java) : QueryDSL 라이브러리 사용을 위한 Config 설정
 
-[2. SwaggerConfig](/osb-server-app/src/main/java/com/osb/osbserverapp/config/SwaggerConfig.java) : Swagger 환경 구축을 위한 Config
+[2. SwaggerConfig](/src/main/java/com/osb/osbserverapp/config/SwaggerConfig.java) : Swagger 환경 구축을 위한 Config
 
-[3. RestTemplateConfig](/osb-server-app/src/main/java/com/osb/osbserverapp/externalapi/config/RestTemplateConfig.java) : RestTemplate 사용 시 Connection timeout 및 최대 연결 세션 설정. @LoadBalanced 사용
+[3. RestTemplateConfig](/src/main/java/com/osb/osbserverapp/externalapi/config/RestTemplateConfig.java) : RestTemplate 사용 시 Connection timeout 및 최대 연결 세션 설정. @LoadBalanced 사용
 
-[4. ApiCommonAdvice](/osb-server-app/src/main/java/com/osb/osbserverapp/common/advice/ApiCommonAdvice.java) : Exception 처리 Advice
+[4. ApiCommonAdvice](/src/main/java/com/osb/osbserverapp/common/advice/ApiCommonAdvice.java) : Exception 처리 Advice
 
