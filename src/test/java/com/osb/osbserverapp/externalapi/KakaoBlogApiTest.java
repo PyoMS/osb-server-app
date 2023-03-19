@@ -2,7 +2,7 @@ package com.osb.osbserverapp.externalapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.osb.osbserverapp.externalapi.dto.KakaoBlogResponse;
+import com.osb.osbserverapp.externalapi.dto.OsbBlogSearchResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,8 +58,8 @@ class KakaoBlogApiTest {
                 String.class);
         */
         try {
-            KakaoBlogResponse kakaoBlogResponse = objectMapper.readValue(exchange.getBody(), KakaoBlogResponse.class);
-            System.out.println("kakaoBlogResponse = " + kakaoBlogResponse);
+            OsbBlogSearchResponse osbBlogSearchResponse = objectMapper.readValue(exchange.getBody(), OsbBlogSearchResponse.class);
+            System.out.println("osbBlogSearchResponse = " + osbBlogSearchResponse);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

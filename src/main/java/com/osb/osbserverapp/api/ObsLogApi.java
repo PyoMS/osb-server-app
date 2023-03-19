@@ -2,7 +2,7 @@ package com.osb.osbserverapp.api;
 
 import com.osb.osbserverapp.dto.ObsGetListReq;
 import com.osb.osbserverapp.dto.ObsTopGetListRes;
-import com.osb.osbserverapp.externalapi.dto.KakaoBlogResponse;
+import com.osb.osbserverapp.externalapi.dto.OsbBlogSearchResponse;
 import com.osb.osbserverapp.service.ObsLogService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class ObsLogApi {
 
     @ApiOperation(value = "블로그 검색", notes = "블로그 검색 조회")
     @GetMapping("/search")
-    public KakaoBlogResponse searchBlogList(@Validated ObsGetListReq obsGetListReq) {
+    public OsbBlogSearchResponse searchBlogList(@Validated ObsGetListReq obsGetListReq) {
         log.info("searchBlogList");
         return obsLogService.searchBlogList(obsGetListReq);
     }

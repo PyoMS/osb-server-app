@@ -21,3 +21,7 @@ b. 인기 검색어 TOP 10 조회 기능
 
 [4. ApiCommonAdvice](/src/main/java/com/osb/osbserverapp/common/advice/ApiCommonAdvice.java) : Exception 처리 Advice
 
+---
+### Jar Download
+
+[osb-server-app](/osb-server-app.jar)

@@ -1,24 +1,19 @@
 package com.osb.osbserverapp.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.osb.osbserverapp.code.SearchSort;
 import com.osb.osbserverapp.common.exception.NotExistBlogSearchException;
 import com.osb.osbserverapp.common.exception.NotInputTextException;
 import com.osb.osbserverapp.domain.ObsLog;
 import com.osb.osbserverapp.dto.ObsGetListReq;
 import com.osb.osbserverapp.dto.ObsTopGetListRes;
-import com.osb.osbserverapp.externalapi.dto.KakaoBlogResponse;
+import com.osb.osbserverapp.externalapi.KakaoBlogApi;
+import com.osb.osbserverapp.externalapi.NaverBlogApi;
+import com.osb.osbserverapp.externalapi.dto.OsbBlogSearchResponse;
 import com.osb.osbserverapp.repository.ObsLogRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
 
 @Service
@@ -26,33 +21,33 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class ObsLogService {
     private final ObsLogRepository obsLogRepository;
-    private final RestTemplate restTemplate;
+    private final KakaoBlogApi kakaoBlogApi;
+    private final NaverBlogApi naverBlogApi;
 
-    @Value("${kakaoAPI}")
-    private String apiKey;
 
     @Transactional
-    public KakaoBlogResponse searchBlogList(ObsGetListReq obsGetListReq) {
-        log.info("obsGetListReq - " + obsGetListReq);
+    public OsbBlogSearchResponse searchBlogList(ObsGetListReq obsGetListReq) {
         if(obsGetListReq.getText()==null){
             throw new NotInputTextException("검색어를 입력하여 주시기 바랍니다.");
         }
-        KakaoBlogResponse kakaoBlogResponse = null;
-        StringBuilder sb = new StringBuilder("KakaoAK ");
-        ObjectMapper objectMapper = new ObjectMapper();
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Authorization", sb.append(apiKey).toString());
-        HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
+        OsbBlogSearchResponse osbBlogSearchResponse = null;
 
-        ResponseEntity<String> exchange = restTemplate.exchange("http://dapi.kakao.com/v2/search/blog?query=" + obsGetListReq.getText()
-                + "&recency="+obsGetListReq.getSort().toString()+"&page="+obsGetListReq.getPage()+"&size="+obsGetListReq.getSize(),
-                HttpMethod.GET, entity, String.class);
-        try {
-            kakaoBlogResponse = objectMapper.readValue(exchange.getBody(), KakaoBlogResponse.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        if(kakaoBlogResponse == null || kakaoBlogResponse.getMeta().getTotal_count()==0){
+        osbBlogSearchResponse = kakaoBlogApi.searchBlog(
+                obsGetListReq.getText(),
+                obsGetListReq.getSort().toString(),
+                obsGetListReq.getPage(),
+                obsGetListReq.getSize()
+        );
+
+        //TODO OsbBlogSearchResponse Transfer 메소드 or 클래스 추가
+        Object o = naverBlogApi.searchBlog(obsGetListReq.getText(),
+                transferSort(obsGetListReq.getSort()),
+                obsGetListReq.getPage(),
+                obsGetListReq.getSize());
+        System.out.println("naverObject = " + o);
+
+
+        if(osbBlogSearchResponse == null || osbBlogSearchResponse.getMeta().getTotal_count()==0){
             throw new NotExistBlogSearchException();
         }else{
             if (obsLogRepository.findByText(obsGetListReq.getText()).isPresent()) { // 조회이력 존재할 경우
@@ -65,8 +60,11 @@ public class ObsLogService {
                         .build();
                 obsLogRepository.save(obsLog);
             }
-            return kakaoBlogResponse;
+            return osbBlogSearchResponse;
         }
+    }
+    private String transferSort(SearchSort searchSort){
+        return searchSort == SearchSort.accuracy ? "sim" : "date";
     }
 
     public ObsTopGetListRes searchTopTen() {

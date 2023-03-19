@@ -2,7 +2,6 @@ package com.osb.osbserverapp.externalapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.osb.osbserverapp.externalapi.dto.OsbBlogSearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -12,31 +11,34 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-
 @Configuration
 @RequiredArgsConstructor
-public class KakaoBlogApi {
+public class NaverBlogApi {
     private final RestTemplate restTemplate;
+    @Value("${naverapi-id}")
+    private String naverapiid;
 
-    @Value("${kakaoAPI}")
-    private String apiKey;
+    @Value("${naverapi-pw}")
+    private String naverapipw;
 
-    public OsbBlogSearchResponse searchBlog(String query, String sort, Integer page, Integer size){
-        StringBuilder sb = new StringBuilder("KakaoAK ");
+    public Object searchBlog(String query, String sort, Integer page, Integer size){
         ObjectMapper objectMapper = new ObjectMapper();
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Authorization", sb.append(apiKey).toString());
+        httpHeaders.add("X-Naver-Client-Id", naverapiid);
+        httpHeaders.add("X-Naver-Client-Secret", naverapipw);
         HttpEntity<String> entity = new HttpEntity<>("", httpHeaders);
-        ResponseEntity<String> exchange = restTemplate.exchange("http://dapi.kakao.com/v2/search/blog" +
+        ResponseEntity<String> exchange = restTemplate.exchange("https://openapi.naver.com/v1/search/blog.json" +
                 "?query=" + query
-                + "&recency=" + sort
-                + "&page=" + page
-                + "&size=" + size,
-                HttpMethod.GET, entity, String.class);
+                + "&sort=" + sort
+                + "&start=" + page
+                + "&display=" + size
+                , HttpMethod.GET, entity, String.class);
         try {
-            return objectMapper.readValue(exchange.getBody(), OsbBlogSearchResponse.class);
+            return objectMapper.readValue(exchange.getBody(), Object.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 }
+
+

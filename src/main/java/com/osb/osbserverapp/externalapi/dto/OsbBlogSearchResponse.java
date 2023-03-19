@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class KakaoBlogResponse {
+public class OsbBlogSearchResponse {
     private List<Documents> documents;
     private Meta meta;
 
@@ -18,12 +18,12 @@ public class KakaoBlogResponse {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Documents{
-        String title;
-        String contents;
-        String url;
-        String blogname;
-        String thumbnail;
-        String datetime;
+        String title; // naver: title
+        String contents; // naver: description
+        String url; // naver: link
+        String blogname; // naver: bloggername
+        String thumbnail; // FIXME 제거 - 네이버와 동기화
+        String datetime; // naver: postdate
     }
 
     @Data
@@ -31,7 +31,7 @@ public class KakaoBlogResponse {
     @AllArgsConstructor
     public static class Meta{
         Integer total_count;
-        Integer pageable_count;
-        Boolean is_end;
+        Integer pageable_count; // FIXME 제거 - 네이버와 동기화
+        Boolean is_end; // FIXME 제거 - 네이버와 동기화
     }
 }
