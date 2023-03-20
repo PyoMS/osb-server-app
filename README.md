@@ -1,5 +1,7 @@
 # OSB 검색서버
 
+## [Jar File Download](/osb-server-app.jar)
+
 ### 1. 기본기능
 
 a. 블로그 검색 기능
@@ -30,6 +32,3 @@ b. 인기 검색어 TOP 10 조회 기능
 ### 5. [외부 API 5xx 장애 시 Naver API로 전환](/osb-api/src/main/java/com/pms/osb/api/service/osblog/ObsLogService.java)
 
 ---
-### Jar Download
-
-[osb-server-app](/osb-server-app.jar)
