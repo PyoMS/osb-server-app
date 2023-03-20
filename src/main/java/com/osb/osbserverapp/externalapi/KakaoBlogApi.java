@@ -25,7 +25,7 @@ public class KakaoBlogApi {
         StringBuilder sb = new StringBuilder("KakaoAK ");
         ObjectMapper objectMapper = new ObjectMapper();
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Authorization", sb.append(apiKey).toString());
+        httpHeaders.add("Authorization", sb.append(apiKey, 0, apiKey.length()-2).toString());
         HttpEntity<String> entity = new HttpEntity<>("", httpHeaders);
         ResponseEntity<String> exchange = restTemplate.exchange("http://dapi.kakao.com/v2/search/blog" +
                 "?query=" + query

@@ -24,8 +24,8 @@ public class NaverBlogApi {
     public Object searchBlog(String query, String sort, Integer page, Integer size){
         ObjectMapper objectMapper = new ObjectMapper();
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("X-Naver-Client-Id", naverapiid);
-        httpHeaders.add("X-Naver-Client-Secret", naverapipw);
+        httpHeaders.add("X-Naver-Client-Id", naverapiid.substring(0,naverapiid.length()-2));
+        httpHeaders.add("X-Naver-Client-Secret", naverapipw.substring(0, naverapipw.length()-2));
         HttpEntity<String> entity = new HttpEntity<>("", httpHeaders);
         ResponseEntity<String> exchange = restTemplate.exchange("https://openapi.naver.com/v1/search/blog.json" +
                 "?query=" + query
