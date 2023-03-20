@@ -2,6 +2,7 @@ package com.pms.osb.externalapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pms.osb.OsbApiApplication;
 import com.pms.osb.api.service.externalapi.dto.OsbBlogSearchResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 
-@SpringBootTest
+@SpringBootTest(classes = OsbApiApplication.class)
 class KakaoBlogApiTest {
     @Autowired
     RestTemplate restTemplate;
@@ -33,7 +34,7 @@ class KakaoBlogApiTest {
         StringBuilder sb = new StringBuilder("KakaoAK ");
         ObjectMapper objectMapper = new ObjectMapper();
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Authorization", sb.append(apiKey).toString());
+        httpHeaders.add("Authorization", sb.append(apiKey, 0, apiKey.length()-2).toString());
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
 
         String url = "http://dapi.kakao.com/v2/search/blog";
