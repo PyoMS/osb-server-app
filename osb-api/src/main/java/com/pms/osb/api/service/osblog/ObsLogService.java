@@ -29,7 +29,7 @@ public class ObsLogService {
     @Transactional
     public OsbBlogSearchResponse searchBlogList(ObsGetListReq obsGetListReq) {
         if(obsGetListReq.getText()==null){
-            throw new NotInputTextException("검색어를 입력하여 주시기 바랍니다.");
+            throw new NotInputTextException();
         }
         OsbBlogSearchResponse osbBlogSearchResponse = null;
         try {
@@ -46,7 +46,7 @@ public class ObsLogService {
                         transferSort(obsGetListReq.getSort()),
                         obsGetListReq.getPage(),
                         obsGetListReq.getSize()));
-            }else {
+            } else {
                 log.error(e.getMessage());
             }
         }

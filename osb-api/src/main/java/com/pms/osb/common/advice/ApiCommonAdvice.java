@@ -6,6 +6,7 @@ import com.pms.osb.common.exception.NotExistBlogSearchException;
 import com.pms.osb.common.exception.NotInputTextException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -17,7 +18,7 @@ public class ApiCommonAdvice {
     public ResponseEntity<DefaultRes> handleNotInputTextException(NotInputTextException e){
         DefaultRes defaultRes = DefaultRes.builder()
                 .apiError(ApiError.NOT_INPUT_TEXT)
-                .detailMessage("")
+                .detailMessage(e.getMessage())
                 .moreInfo("")
                 .build();
         return new ResponseEntity<>(defaultRes, ApiError.NOT_INPUT_TEXT.getHttpStatus());
@@ -27,9 +28,19 @@ public class ApiCommonAdvice {
     public ResponseEntity<DefaultRes> handleNotExistBlogSearchException(NotExistBlogSearchException e){
         DefaultRes defaultRes = DefaultRes.builder()
                 .apiError(ApiError.NOT_EXIST_BLOG_SEARCH)
-                .detailMessage("")
+                .detailMessage(e.getMessage())
                 .moreInfo("")
                 .build();
         return new ResponseEntity<>(defaultRes, ApiError.NOT_EXIST_BLOG_SEARCH.getHttpStatus());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<DefaultRes> handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
+        DefaultRes defaultRes = DefaultRes.builder()
+                .apiError(ApiError.VALIDATION_EXCEPTION)
+                .detailMessage(e.getMessage())
+                .moreInfo("")
+                .build();
+        return new ResponseEntity<>(defaultRes, ApiError.VALIDATION_EXCEPTION.getHttpStatus());
     }
 }
