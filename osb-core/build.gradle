@@ -1,0 +1,38 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
+plugins {
+    id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
+}
+def querydslDir = "$buildDir/generated/querydsl" as Object
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+sourceSets{
+    main.java.srcDir querydslDir
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl{
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+
+dependencies {
+    implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6") // jpa query logging 의존성 추가
+
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}" // querydsl
+    implementation "com.querydsl:querydsl-apt:${queryDslVersion}" // querydsl
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

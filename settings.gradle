@@ -1,1 +1,3 @@
 rootProject.name = 'osb-server-app'
+include 'osb-core'
+include 'osb-api'

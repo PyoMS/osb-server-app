@@ -1,0 +1,34 @@
+Spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  devtools:
+    restart:
+      enabled: false
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        #        show_sql: true
+        format_sql: false
+  h2:
+    console:
+      enabled: true
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: debug
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher # for cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException on spring boot 2.6
+
+kakaoAPI: 25813b1461ccf5286efe7533724a03c42d
+naverapi-id: qZqPdluImmidi1HTq2Mx3g
+naverapi-pw: bUlkhUHlEa6j
