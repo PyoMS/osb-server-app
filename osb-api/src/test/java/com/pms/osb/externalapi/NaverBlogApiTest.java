@@ -3,6 +3,7 @@ package com.pms.osb.externalapi;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pms.osb.OsbApiApplication;
+import com.pms.osb.api.service.externalapi.dto.NaverSearchResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,7 +45,7 @@ class NaverBlogApiTest {
                 + "&display=" + size,
                 HttpMethod.GET, entity, String.class);
         try {
-            Object o = objectMapper.readValue(exchange.getBody(), Object.class);
+            Object o = objectMapper.readValue(exchange.getBody(), NaverSearchResponse.class);
             System.out.println("o = " + o);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

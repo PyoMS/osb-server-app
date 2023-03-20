@@ -2,6 +2,7 @@ package com.pms.osb.api.service.externalapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pms.osb.api.service.externalapi.dto.KakaoSearchResponse;
 import com.pms.osb.api.service.externalapi.dto.OsbBlogSearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +22,7 @@ public class KakaoBlogApi {
     @Value("${kakaoAPI}")
     private String apiKey;
 
-    public OsbBlogSearchResponse searchBlog(String query, String sort, Integer page, Integer size){
+    public KakaoSearchResponse searchBlog(String query, String sort, Integer page, Integer size){
         StringBuilder sb = new StringBuilder("KakaoAK ");
         ObjectMapper objectMapper = new ObjectMapper();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -34,7 +35,7 @@ public class KakaoBlogApi {
                 + "&size=" + size,
                 HttpMethod.GET, entity, String.class);
         try {
-            return objectMapper.readValue(exchange.getBody(), OsbBlogSearchResponse.class);
+            return objectMapper.readValue(exchange.getBody(), KakaoSearchResponse.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

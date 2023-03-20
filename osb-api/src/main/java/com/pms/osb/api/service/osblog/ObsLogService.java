@@ -2,6 +2,7 @@ package com.pms.osb.api.service.osblog;
 
 import com.pms.osb.api.service.externalapi.KakaoBlogApi;
 import com.pms.osb.api.service.externalapi.NaverBlogApi;
+import com.pms.osb.api.service.externalapi.dto.NaverSearchResponse;
 import com.pms.osb.api.service.externalapi.dto.OsbBlogSearchResponse;
 import com.pms.osb.api.service.osblog.code.SearchSort;
 import com.pms.osb.api.service.osblog.dto.ObsGetListReq;
@@ -31,23 +32,23 @@ public class ObsLogService {
             throw new NotInputTextException("검색어를 입력하여 주시기 바랍니다.");
         }
         OsbBlogSearchResponse osbBlogSearchResponse = null;
+        try {
+            osbBlogSearchResponse = new OsbBlogSearchResponse(kakaoBlogApi.searchBlog(
+                    obsGetListReq.getText(),
+                    obsGetListReq.getSort().toString(),
+                    obsGetListReq.getPage(),
+                    obsGetListReq.getSize()
+            ));
+        } catch (Exception e){
+            log.info("process Naver API Blog Search");
+            log.error(e.getMessage());
+            osbBlogSearchResponse = new OsbBlogSearchResponse(naverBlogApi.searchBlog(obsGetListReq.getText(),
+                    transferSort(obsGetListReq.getSort()),
+                    obsGetListReq.getPage(),
+                    obsGetListReq.getSize()));
+        }
 
-        osbBlogSearchResponse = kakaoBlogApi.searchBlog(
-                obsGetListReq.getText(),
-                obsGetListReq.getSort().toString(),
-                obsGetListReq.getPage(),
-                obsGetListReq.getSize()
-        );
-
-        //TODO OsbBlogSearchResponse Transfer 메소드 or 클래스 추가
-        Object o = naverBlogApi.searchBlog(obsGetListReq.getText(),
-                transferSort(obsGetListReq.getSort()),
-                obsGetListReq.getPage(),
-                obsGetListReq.getSize());
-        System.out.println("naverObject = " + o);
-
-
-        if(osbBlogSearchResponse == null || osbBlogSearchResponse.getMeta().getTotal_count()==0){
+        if(osbBlogSearchResponse == null || osbBlogSearchResponse.getTotal_count()==0){
             throw new NotExistBlogSearchException();
         }else{
             if (obsLogRepository.findByText(obsGetListReq.getText()).isPresent()) { // 조회이력 존재할 경우

@@ -2,6 +2,7 @@ package com.pms.osb.api.service.externalapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pms.osb.api.service.externalapi.dto.NaverSearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +22,7 @@ public class NaverBlogApi {
     @Value("${naverapi-pw}")
     private String naverapipw;
 
-    public Object searchBlog(String query, String sort, Integer page, Integer size){
+    public NaverSearchResponse searchBlog(String query, String sort, Integer page, Integer size){
         ObjectMapper objectMapper = new ObjectMapper();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("X-Naver-Client-Id", naverapiid.substring(0,naverapiid.length()-2));
@@ -34,7 +35,7 @@ public class NaverBlogApi {
                 + "&display=" + size
                 , HttpMethod.GET, entity, String.class);
         try {
-            return objectMapper.readValue(exchange.getBody(), Object.class);
+            return objectMapper.readValue(exchange.getBody(), NaverSearchResponse.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
