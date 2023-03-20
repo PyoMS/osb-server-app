@@ -2,7 +2,6 @@ package com.pms.osb.api.service.osblog;
 
 import com.pms.osb.api.service.externalapi.KakaoBlogApi;
 import com.pms.osb.api.service.externalapi.NaverBlogApi;
-import com.pms.osb.api.service.externalapi.dto.NaverSearchResponse;
 import com.pms.osb.api.service.externalapi.dto.OsbBlogSearchResponse;
 import com.pms.osb.api.service.osblog.code.SearchSort;
 import com.pms.osb.api.service.osblog.dto.ObsGetListReq;
@@ -15,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
 
 @Service
@@ -39,13 +39,16 @@ public class ObsLogService {
                     obsGetListReq.getPage(),
                     obsGetListReq.getSize()
             ));
-        } catch (Exception e){
-            log.info("process Naver API Blog Search");
-            log.error(e.getMessage());
-            osbBlogSearchResponse = new OsbBlogSearchResponse(naverBlogApi.searchBlog(obsGetListReq.getText(),
-                    transferSort(obsGetListReq.getSort()),
-                    obsGetListReq.getPage(),
-                    obsGetListReq.getSize()));
+        } catch (HttpClientErrorException e){
+            if(e.getStatusCode().is5xxServerError()){ // 카카오 API 5xx 에러 시 Naver API로 처리
+                log.info("process Naver API Blog Search");
+                osbBlogSearchResponse = new OsbBlogSearchResponse(naverBlogApi.searchBlog(obsGetListReq.getText(),
+                        transferSort(obsGetListReq.getSort()),
+                        obsGetListReq.getPage(),
+                        obsGetListReq.getSize()));
+            }else {
+                log.error(e.getMessage());
+            }
         }
 
         if(osbBlogSearchResponse == null || osbBlogSearchResponse.getTotal_count()==0){
