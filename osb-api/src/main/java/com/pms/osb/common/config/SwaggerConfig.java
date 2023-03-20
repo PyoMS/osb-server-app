@@ -24,7 +24,7 @@ public class SwaggerConfig {
                 .apiInfo(swaggerInfo())
 //                .groupName("com.osb")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.osb.osbserverapp.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.pms.osb.api"))
                 .paths(PathSelectors.any())
                 .build()
                 .useDefaultResponseMessages(false);
