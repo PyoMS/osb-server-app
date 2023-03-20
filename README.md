@@ -13,13 +13,21 @@ b. 인기 검색어 TOP 10 조회 기능
 
 
 ### 3. Config / Advice 항목
-[1. JpaConfig](/src/main/java/com/osb/osbserverapp/config/JpaConfig.java) : QueryDSL 라이브러리 사용을 위한 Config 설정
+[1. JpaConfig](/osb-core/src/main/java/com/pms/osb/config/JpaConfig.java) : QueryDSL 라이브러리 사용을 위한 Config 설정
 
-[2. SwaggerConfig](/src/main/java/com/osb/osbserverapp/config/SwaggerConfig.java) : Swagger 환경 구축을 위한 Config
+[2. SwaggerConfig](/osb-api/src/main/java/com/pms/osb/common/config/SwaggerConfig.java) : Swagger 환경 구축을 위한 Config
 
-[3. RestTemplateConfig](/src/main/java/com/osb/osbserverapp/externalapi/config/RestTemplateConfig.java) : RestTemplate 사용 시 Connection timeout 및 최대 연결 세션 설정. @LoadBalanced 사용
+[3. RestTemplateConfig](/osb-api/src/main/java/com/pms/osb/api/service/externalapi/config/RestTemplateConfig.java) : RestTemplate 사용 시 Connection timeout 및 최대 연결 세션 설정. @LoadBalanced 사용
 
-[4. ApiCommonAdvice](/src/main/java/com/osb/osbserverapp/common/advice/ApiCommonAdvice.java) : Exception 처리 Advice
+[4. ApiCommonAdvice](/osb-api/src/main/java/com/pms/osb/common/advice/ApiCommonAdvice.java) : Exception 처리 Advice
+
+### 4. Module 분할
+
+- osb-core : domain, repository, querydslConfig 클래스 
+- osb-api : service, api, 외부api, web exception(ApiCommonAdvice)
+
+
+### 5. [외부 API 5xx 장애 시 Naver API로 전환](/osb-api/src/main/java/com/pms/osb/api/service/osblog/ObsLogService.java)
 
 ---
 ### Jar Download
