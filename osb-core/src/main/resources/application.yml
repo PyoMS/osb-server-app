@@ -28,7 +28,3 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher # for cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException on spring boot 2.6
-
-kakaoAPI: 25813b1461ccf5286efe7533724a03c42d
-naverapi-id: qZqPdluImmidi1HTq2Mx3g
-naverapi-pw: bUlkhUHlEa6j
