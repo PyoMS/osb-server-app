@@ -10,7 +10,7 @@ b. 인기 검색어 TOP 10 조회 기능
 
 
 ### 2. 추가 기능 라이브러리 항목
-1. Swagger2 : RestfulAPI 명세서 제공 및 테스트 환경 제공 
+1. Swagger2 : RestfulAPI 명세서 제공 및 테스트 환경 제공 (http://localhost:8080/swagger-ui/)
 2. QueryDSL : 동적 쿼리 제공 및 컴파일 단계에서 문법오류 확인
 
 
